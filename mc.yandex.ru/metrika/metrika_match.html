@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+</head>
+
+<body>
+    <script>
+        (function() {
+            try {
+                (function() {
+                    function l(a) {
+                        var b = a.document;
+                        if (b.hasStorageAccess) b.hasStorageAccess().then(function(c) {
+                            a.parent.postMessage("sc.sar*" + (c ? "1" : "2"), "*")
+                        })["catch"](function() {
+                            a.parent.postMessage("sc.sar*c", "*")
+                        })
+                    }
+
+                    function q(a) {
+                        function b(c, d) {
+                            var f = "sc.topics-response*" + c;
+                            a.parent.postMessage(d ? f + "*" + d : f, "*")
+                        }
+                        a.document.browsingTopics().then(function(c) {
+                            return b("1", JSON.stringify(c))
+                        })["catch"](function() {
+                            return b("e")
+                        })
+                    }
+
+                    function g(a, b) {
+                        return function() {
+                            e[a] && (e[a].timeout && (clearTimeout(e[a].timeout),
+                                e[a].timeout = 0, window.parent.postMessage(["sc.image", a, b].join("*"), "*")), e[a].g = null)
+                        }
+                    }
+
+                    function m(a) {
+                        try {
+                            if (a.data && a.data.split) {
+                                var b = a.data.split("*");
+                                if ("sc.images" === b[0])
+                                    for (a = 1; a < b.length; a++) {
+                                        var c = b[a];
+                                        a: {
+                                            var d = void 0,
+                                                f = c;
+                                            for (d = 0; d < n.length; d++)
+                                                if (n[d] === f) {
+                                                    var k = !0;
+                                                    break a
+                                                }
+                                            for (d = 0; d < p.length; d++)
+                                                if (p[d].test(f)) {
+                                                    k = !0;
+                                                    break a
+                                                }
+                                            k = !1
+                                        }
+                                        if (k) {
+                                            var h = document.createElement("img");
+                                            h.onload = g(c, "1");
+                                            h.onerror = g(c, "e");
+                                            h.src = c;
+                                            var r = g(c, "f");
+                                            e[c] = {
+                                                g: h,
+                                                timeout: setTimeout(r, 5E3)
+                                            }
+                                        } else g(c, "g")()
+                                    } else "sc.topics" ===
+                                        b[0] ? q(window) : "sc.sa" === b[0] ? l(window) : "frameReinit" === b[0] && window.parent.postMessage("sc.frame", "*")
+                            }
+                        } catch (t) {}
+                    }
+                    var n = ["https://an.yandex.ru/mapuid/google/", "https://dmp.adform.net/serving/cookie/match?party=1123", "https://mc.kinopoisk.ru/sync_cookie_image_check"],
+                        p = [/^https*:\/\/mc\.yandex\.(?:ru|ua|by|kz|az|kg|lv|md|tj|tm|uz|ee|fr|co\.il|com\.ge|com\.am|com\.tr|com)\/sync_cookie_image_check$/, /^https:\/\/adstat.yandex.ru\/track\?service=metrika&id=\d+/, /^https:\/\/[^\.\/]+\.mc\.yandex.ru\/watch\/3\/1/,
+                            /^https:\/\/adfstat\.yandex\.ru\/metrica\?id=\d+/
+                        ],
+                        e = {};
+                    window.postMessage && window.parent && (window.addEventListener ? window.addEventListener("message", m, !1) : window.attachEvent && window.attachEvent("onmessage", m), window.parent.postMessage("sc.frame", "*"))
+                })()
+            } catch (l) {};
+        }).call(this)
+    </script>
+</body>
+
+</html>
